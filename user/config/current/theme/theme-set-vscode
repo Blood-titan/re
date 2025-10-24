@@ -11,7 +11,7 @@ EDITOR_NAME="${4:-VS Code}"
 
 VS_CODE_THEME="$HOME/.config/current/theme/vscode.json"
 
-if omarchy-cmd-present "$EDITOR_CMD" && [[ ! -f "$SKIP_FLAG" ]]; then
+if cmd-present "$EDITOR_CMD" && [[ ! -f "$SKIP_FLAG" ]]; then
   if [[ -f "$VS_CODE_THEME" ]]; then
     theme_name=$(jq -r '.name' "$VS_CODE_THEME")
     extension=$(jq -r '.extension' "$VS_CODE_THEME")
