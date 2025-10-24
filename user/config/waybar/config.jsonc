@@ -5,28 +5,28 @@
   "spacing": 0,
   "height": 26,
   "modules-left": [
-    "home",
+    "custom/home",
     "clock",
-    "workspaces",
-    "apps"
+    "hyprland/workspaces",
+    "custom/apps"
   ],
   "modules-center": [
-    "active_window",
+    "hyprland/window",
     "cpu",
-    "pomodoro"
+    "custom/pomodoro"
   ],
   "modules-right": [
     "tray",
-    "playerctl",
-    "vscode",
-    "weather",
+    "mpris",
+    "custom/vscode",
+    "custom/weather",
     "battery",
     "pulseaudio",
-    "power"
+    "custom/power"
   ],
   "format": "{text}",
-  "home": {
-    "format": "",
+  "custom/home": {
+    "format": "",
     "tooltip": false,
     "on-click": "xdg-open $HOME"
   },
@@ -36,43 +36,25 @@
     "tooltip-format": "{:%A, %d %B %Y}",
     "on-click": "swaymsg 'workspace 10' || true" // harmless fallback: open calendar could be mapped
   },
-  // WORKSPACES: sway by default; if you use Hyprland, swap to hyprland/workspaces (comment provided)
-  "workspaces": {
-    "return-type": "json",
-    "interval": 1,
-    "format": "{name}",
-    "type": "hyprland/workspaces"
-    /* For Hyprland use:
-       "type": "hyprland/workspaces"
-       and adjust "format" as desired.
-    */
+  "hyprland/workspaces": {
+    "on-click": "activate",
+    "format": "{name}"
   },
-  "apps": {
+  "custom/apps": {
     "format": "󰝰 󰨞 󰨊 󰈬",
     "tooltip": false,
     "on-click": "sh -c '~/.config/waybar/scripts/open_apps_menu.sh'"
   },
-  "active_window": {
+  "hyprland/window": {
     "format": "{title}",
     "max-length": 40,
-    "tooltip": false,
-    "format-icons": false
+    "tooltip": false
   },
   "cpu": {
-    "type": "internal/cpu",
+    "interval": 5,
     "format": "{usage}%"
   },
-  "obs": {
-    "type": "custom/script",
-    "exec": "~/.config/waybar/scripts/obs_status.py",
-    "interval": 3,
-    "return-type": "json",
-    "format": "{icon} {state}",
-    "on-click": "~/.config/waybar/scripts/obs_status.py toggle",
-    "tooltip": true
-  },
-  "pomodoro": {
-    "type": "custom/script",
+  "custom/pomodoro": {
     "exec": "~/.config/waybar/scripts/pomodoro.py status",
     "interval": 1,
     "return-type": "json",
@@ -82,54 +64,49 @@
     "tooltip": true
   },
   "tray": {
-    "type": "tray",
-    "max-icons": 20
+    "icon-size": 12,
+    "spacing": 10
   },
-  // playerctl (media) — requires playerctl installed
-  "playerctl": {
-    "type": "playerctl",
-    "format": "{artist} - {title}",
-    "max-length": 30,
-    "tooltip": true,
-    "on-click": "playerctl play-pause"
+  // MPRIS media player
+  "mpris": {
+    "format": "{player_icon} {dynamic}",
+    "format-paused": "{status_icon} <i>{dynamic}</i>",
+    "player-icons": {
+      "default": "🎵"
+    },
+    "status-icons": {
+      "paused": "⏸"
+    },
+    "max-length": 30
   },
-  "vscode": {
-    "type": "custom/script",
+  "custom/vscode": {
     "exec": "~/.config/waybar/scripts/vscode_recents.sh",
     "interval": 60,
-    "format": " recents",
+    "format": " recents",
     "tooltip": true,
     "on-click": "sh -c '~/.config/waybar/scripts/vscode_recents.sh open'"
   },
   // Weather: uses OpenWeatherMap key by default — you can change to wttr.in alternative in script.
-  "weather": {
-    "type": "custom/script",
+  "custom/weather": {
     "exec": "sh -c '~/.config/waybar/scripts/weather.sh'",
     "interval": 600,
-    "format": "{icon} {temp}°C",
+    "return-type": "json",
     "tooltip": true
   },
   "battery": {
-    "type": "battery",
-    "format": "{icon}"
+    "format": "{capacity}% {icon}",
+    "format-icons": ["󰁺", "󰁻", "󰁼", "󰁽", "󰁾", "󰁿", "󰂀", "󰂁", "󰂂", "󰁹"]
   },
   // Volume via PipeWire/PulseAudio (pulseaudio or pipewire + pamixer)
   "pulseaudio": {
-    "type": "pulseaudio",
-    "format": "{volume}%"
+    "format": "{icon} {volume}%",
+    "format-muted": "",
+    "format-icons": {
+      "default": ["", "", ""]
+    }
   },
-  "theme": {
-    "type": "custom/script",
-    "exec": "~/.config/current/theme/theme-current", // or wherever your script lives
-    "interval": 10,
-    "return-type": "json",
-    "format": "",
-    "on-click": "~/.config/current/theme/theme-next", // cycles to the next theme
-    "tooltip": true
-  },
-  "power": {
-    "type": "custom/menu",
-    "format": "",
+  "custom/power": {
+    "format": "",
     "tooltip": false,
     "on-click": "~/.config/waybar/scripts/power_menu.sh"
   },
