@@ -1,0 +1,140 @@
+{
+  "reload_style_on_change": true,
+  "layer": "top",
+  "position": "top",
+  "spacing": 0,
+  "height": 26,
+  "modules-left": [
+    "home",
+    "clock",
+    "workspaces",
+    "apps"
+  ],
+  "modules-center": [
+    "active_window",
+    "cpu",
+    "pomodoro",
+    "obs"
+  ],
+  "modules-right": [
+    "tray",
+    "playerctl",
+    "vscode",
+    "weather",
+    "battery",
+    "pulseaudio",
+    "wallpapers",
+    "power"
+  ],
+  "format": "{text}",
+  "home": {
+    "format": "",
+    "tooltip": false,
+    "on-click": "xdg-open $HOME"
+  },
+  "clock": {
+    "format": " %H:%M",
+    "tooltip": true,
+    "tooltip-format": "{:%A, %d %B %Y}",
+    "on-click": "swaymsg 'workspace 10' || true" // harmless fallback: open calendar could be mapped
+  },
+  // WORKSPACES: sway by default; if you use Hyprland, swap to hyprland/workspaces (comment provided)
+  "workspaces": {
+    "return-type": "json",
+    "interval": 1,
+    "format": "{name}",
+    "type": "hyprland/workspaces"
+    /* For Hyprland use:
+       "type": "hyprland/workspaces"
+       and adjust "format" as desired.
+    */
+  },
+  "apps": {
+    "format": "󰝰 󰨞 󰨊 󰈬",
+    "tooltip": false,
+    "on-click": "sh -c '~/.config/waybar/scripts/open_apps_menu.sh'"
+  },
+  "active_window": {
+    "format": "{title}",
+    "max-length": 40,
+    "tooltip": false,
+    "format-icons": false
+  },
+  "cpu": {
+    "type": "internal/cpu",
+    "format": "{usage}%"
+  },
+  "obs": {
+    "type": "custom/script",
+    "exec": "~/.config/waybar/scripts/obs_status.py",
+    "interval": 3,
+    "return-type": "json",
+    "format": "{icon} {state}",
+    "on-click": "~/.config/waybar/scripts/obs_status.py toggle",
+    "tooltip": true
+  },
+  "pomodoro": {
+    "type": "custom/script",
+    "exec": "~/.config/waybar/scripts/pomodoro.py status",
+    "interval": 1,
+    "return-type": "json",
+    "format": "{icon} {text}",
+    "on-click": "~/.config/waybar/scripts/pomodoro.py toggle",
+    "on-right-click": "~/.config/waybar/scripts/pomodoro.py reset",
+    "tooltip": true
+  },
+  "tray": {
+    "type": "tray",
+    "max-icons": 20
+  },
+  // playerctl (media) — requires playerctl installed
+  "playerctl": {
+    "type": "playerctl",
+    "format": "{artist} - {title}",
+    "max-length": 30,
+    "tooltip": true,
+    "on-click": "playerctl play-pause"
+  },
+  "vscode": {
+    "type": "custom/script",
+    "exec": "~/.config/waybar/scripts/vscode_recents.sh",
+    "interval": 60,
+    "format": " recents",
+    "tooltip": true,
+    "on-click": "sh -c '~/.config/waybar/scripts/vscode_recents.sh open'"
+  },
+  // Weather: uses OpenWeatherMap key by default — you can change to wttr.in alternative in script.
+  "weather": {
+    "type": "custom/script",
+    "exec": "sh -c '~/.config/waybar/scripts/weather.sh'",
+    "interval": 600,
+    "format": "{icon} {temp}°C",
+    "tooltip": true
+  },
+  "battery": {
+    "type": "battery",
+    "format": "{icon}"
+  },
+  // Volume via PipeWire/PulseAudio (pulseaudio or pipewire + pamixer)
+  "pulseaudio": {
+    "type": "pulseaudio",
+    "format": "{volume}%"
+  },
+  "theme": {
+    "type": "custom/script",
+    "exec": "~/.config/current/theme/theme-current", // or wherever your script lives
+    "interval": 10,
+    "return-type": "json",
+    "format": "",
+    "on-click": "~/.config/current/theme/theme-next", // cycles to the next theme
+    "tooltip": true
+  },
+  "power": {
+    "type": "custom/menu",
+    "format": "",
+    "tooltip": false,
+    "on-click": "~/.config/waybar/scripts/power_menu.sh"
+  },
+  // GLOBAL styling - leave mostly blank here; CSS in style.css
+  "module-margin": 2
+}
