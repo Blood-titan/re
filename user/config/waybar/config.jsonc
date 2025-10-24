@@ -13,8 +13,7 @@
   "modules-center": [
     "active_window",
     "cpu",
-    "pomodoro",
-    "obs"
+    "pomodoro"
   ],
   "modules-right": [
     "tray",
@@ -23,7 +22,6 @@
     "weather",
     "battery",
     "pulseaudio",
-    "wallpapers",
     "power"
   ],
   "format": "{text}",

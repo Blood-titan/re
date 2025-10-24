@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 # put your key into OPENWEATHER_APIKEY or edit the script
-APIKEY="${OPENWEATHER_APIKEY:-a1cb970c8087477db6880939251506}"
+APIKEY="${OPENWEATHER_APIKEY:-YOUR_API_KEY_HERE}"
 CITY="${CITY:-Chennai}"
 res=$(curl -s "https://api.openweathermap.org/data/2.5/weather?q=${CITY}&units=metric&appid=${APIKEY}")
 if [ -z "$res" ]; then
